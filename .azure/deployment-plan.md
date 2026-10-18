@@ -74,5 +74,9 @@ Verified on 2026-10-18 before provisioning:
 - Resource group and Static Web App created in East Asia, Free; GitHub integration automatically generated the workflow and deployment Secret.
 - Endpoint: https://witty-hill-03dbc8b00.2.azurestaticapps.net
 - Azure-generated main workflow reviewed and converted to call existing Flutter build/deploy workflow; no duplicate push trigger.
-- Application upload and CI/CD verification: pending main configuration commit.
-- HTTPS endpoint and CI/CD verification: not started.
+- Application upload and CI/CD verification: passed. GitHub Actions run 39091456997 completed successfully for main commit 3a26becf57d5074cb53a3bc7085bc881badf1eb8.
+- GitHub run: https://github.com/KKiyatho/Dang-road/actions/runs/39091456997
+- Azure environment default: Ready, source branch main.
+- HTTPS verification: root, flutter_bootstrap.js, main.dart.js and manifest.json return 200; /courses/deployment-check rewrites to index.html; flutter-view is present, title is Dang Road (Korean).
+- git diff cc4739f HEAD -- app/lib app/pubspec.yaml app/pubspec.lock app/web: no changes, confirming application functionality was not modified for deployment.
+- Runtime Firebase domain features were not end-to-end tested; check authorized domains and existing Firebase configuration separately.

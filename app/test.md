@@ -12,7 +12,8 @@
 - main 자동 실행 파일: `.github/workflows/azure-static-web-apps-witty-hill-03dbc8b00.yml`.
 - 빌드·배포 구현: `.github/workflows/flutter-web-deploy.yml` (workflow_call 전용이므로 중복 실행하지 않음).
 - Azure가 자동 생성한 배포 Secret을 그대로 참조합니다. 새 리소스나 Secret을 만들 필요가 없습니다.
-- 2026-10-18 리소스 생성과 GitHub 연결을 완료했습니다. 실제 배포 완료 여부는 최신 Actions 실행의 Deploy 결과와 사이트 응답으로 확인합니다.
+- 2026-10-18 실제 배포 완료: https://github.com/KKiyatho/Dang-road/actions/runs/39091456997 (`success`, 배포 코드 `3a26bec`). Azure production 환경은 `Ready`입니다.
+- 사이트 제목 `댕로드`, Flutter 렌더링 요소, 첫 페이지/JS/manifest HTTP 200과 깊은 경로 fallback을 확인했습니다. Firebase 로그인/저장 등 도메인 기능 전체의 정상 동작까지 검증했다는 의미는 아닙니다.
 
 ### 1. 현재 구성과 추천 서비스
 
@@ -120,7 +121,7 @@ Static Web Apps의 서버 시작 명령은 **없습니다**. 로컬 실행은 `a
 3. 실행 Summary의 Website URL 또는 Azure Portal > `dang-road-web` > **Overview > URL / Browse**에서 실제 주소를 확인합니다. 현재 URL은 https://witty-hill-03dbc8b00.2.azurestaticapps.net 입니다.
 4. 새 브라우저 탭에서 첫 화면, 새로고침, 깊은 경로 진입, 모바일 폭, Firebase 연결 오류를 확인합니다. 비어 있는 화면이면 브라우저 Network에서 JS/WASM/폰트 404와 콘솔 오류를 확인합니다.
 5. 토큰 오류는 Secret 참조 이름과 Portal 배포 토큰을, index.html 오류는 `app/build/web` 경로와 빌드 단계를 확인합니다.
-6. 이후 흐름: 코드 수정 > 로컬 분석/테스트 > 본인이 commit > `git push origin main` > Actions 자동 빌드/배포 > Summary와 실제 사이트 확인입니다. 이 설정을 반영하기 전에는 main push만으로 배포되지 않습니다.
+6. 이후 흐름: 코드 수정 > 로컬 분석/테스트 > 본인이 commit > `git push origin main` > Actions 자동 빌드/배포 > Summary와 실제 사이트 확인입니다. 현재 저장소에 설정 반영과 실제 자동 배포 검증까지 완료했습니다.
 7. 운영 반영을 되돌릴 때는 원하는 이전 코드로 revert commit을 만들어 main에 push하고 동일 파이프라인을 실행합니다.
 
 공식 참고:
