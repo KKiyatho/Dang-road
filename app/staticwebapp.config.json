@@ -1,0 +1,15 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*",
+      "/canvaskit/*",
+      "/icons/*",
+      "/*.{js,mjs,wasm,json,png,jpg,jpeg,svg,ico,woff,woff2,ttf,otf,map}"
+    ]
+  },
+  "mimeTypes": {
+    ".wasm": "application/wasm",
+    ".mjs": "text/javascript"
+  }
+}
