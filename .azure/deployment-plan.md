@@ -29,7 +29,7 @@ Status: Validated
 - Type: AZCLI provisioning with GitHub source integration and GitHub Actions application deployment.
 - Existing workflow: .github/workflows/flutter-web-deploy.yml.
 - Provisioning: use GitHub integration where permissions permit automatic workflow creation.
-- Authentication: SWA deployment token stored only in GitHub Secrets, plus GitHub identity token where supported.
+- Authentication: SWA DeploymentToken stored only in GitHub Secrets. Identity-token combined upload was rejected in live runs; attempted policy change was rejected by ARM. Retain DeploymentToken and remove unused id-token permission.
 
 ## Required Gates
 

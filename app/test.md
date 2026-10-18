@@ -61,7 +61,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: azure-production
@@ -99,10 +98,10 @@ Static Web Apps의 서버 시작 명령은 **없습니다**. 로컬 실행은 `a
 | --- | --- |
 | Firebase 웹 apiKey/appId/projectId/authDomain/storageBucket/messagingSenderId/measurementId | 현재 `app/lib/firebase_options.dart`에 정적으로 포함되어 있으므로 추가 빌드 환경변수는 필요 없습니다. 브라우저에 공개되는 클라이언트 설정입니다. |
 | Azure 배포 토큰 | Portal이 만든 GitHub Actions Repository Secret. 토큰을 YAML, Dart, 채팅, 로그에 넣지 않습니다. |
-| GitHub OIDC | 호출자와 호출형 워크플로의 `id-token: write`로 실행 시 짧은 수명의 GitHub identity token을 발급합니다. |
+| GitHub OIDC | 현재 SWA는 DeploymentToken 정책입니다. identity token 병용 업로드가 실제로 거부되어 활성화하지 않습니다. 불필요한 id-token 권한도 부여하지 않습니다. |
 | Firebase 서비스 계정/Admin SDK private key | 프론트엔드 및 dart-define에 절대 넣지 않습니다. 이 배포에는 필요하지 않습니다. |
 
-현재 구성은 공식 SWA 작업의 **배포 토큰 + GitHub identity token** 방식을 사용합니다. identity token을 추가했다고 배포 토큰이 제거되는 것은 아닙니다. Entra client secret이나 서비스 계정을 새로 만들지는 않습니다. 순수한 Entra OIDC만 사용하는 App Service 배포와는 다른 방식입니다. Portal의 배포 인증 정책과 생성된 Secret을 유지하고, 토큰 노출 시 Portal에서 재발급 후 GitHub Secret을 갱신합니다.
+현재 구성은 실제 리소스의 **DeploymentToken** 정책과 GitHub Actions Secret을 사용합니다. OIDC를 검토했으나 identity token 병용 업로드가 거부되었고 GitHub 정책 전환도 현재 API에서 거부되어, 검증 가능한 배포 토큰 방식으로 구성합니다. Entra client secret이나 서비스 계정을 새로 만들지 않습니다. 토큰 노출 시 Portal에서 재발급 후 GitHub Secret을 갱신합니다.
 
 정적 Flutter 앱은 Azure의 런타임 환경변수를 Dart 코드에 자동 주입하지 않습니다. 향후 dart-define을 추가해도 빌드에 포함된 값은 사용자에게 공개되므로 서버 비밀정보를 넣으면 안 됩니다.
 
@@ -117,7 +116,7 @@ Static Web Apps의 서버 시작 명령은 **없습니다**. 로컬 실행은 `a
 ### 6. 배포 검증 및 반복 작업
 
 1. GitHub 저장소 > **Actions** > `Dang Road Azure Production` > 최신 main 실행을 엽니다.
-2. Checkout, Flutter 설치, 의존성, Analyze, Tests, Build, Output, Identity token, Deploy 단계가 성공했는지 확인합니다. 빌드만 녹색이고 Deploy가 실패한 경우 배포 완료가 아닙니다.
+2. Checkout, Flutter 설치, 의존성, Analyze, Tests, Build, Output, Deploy 단계가 성공했는지 확인합니다. 빌드만 녹색이고 Deploy가 실패한 경우 배포 완료가 아닙니다.
 3. 실행 Summary의 Website URL 또는 Azure Portal > `dang-road-web` > **Overview > URL / Browse**에서 실제 주소를 확인합니다. 현재 URL은 https://witty-hill-03dbc8b00.2.azurestaticapps.net 입니다.
 4. 새 브라우저 탭에서 첫 화면, 새로고침, 깊은 경로 진입, 모바일 폭, Firebase 연결 오류를 확인합니다. 비어 있는 화면이면 브라우저 Network에서 JS/WASM/폰트 404와 콘솔 오류를 확인합니다.
 5. 토큰 오류는 Secret 참조 이름과 Portal 배포 토큰을, index.html 오류는 `app/build/web` 경로와 빌드 단계를 확인합니다.
