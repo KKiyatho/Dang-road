@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'services/firebase_services.dart';
+import 'app_shell.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class DangRoadApp extends StatelessWidget {
           surface: const Color(0xFFFFF8F5),
         ),
       ),
-      home: const CourseExplorerPage(),
+      home: const AppShell(),
     );
   }
 }

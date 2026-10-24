@@ -1,11 +1,11 @@
 {
-    "name": "app",
-    "short_name": "app",
+    "name": "댕로드",
+    "short_name": "댕로드",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "반려견과 오늘 걷기 좋은 길을 확인하세요.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
